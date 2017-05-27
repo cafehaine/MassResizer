@@ -61,6 +61,7 @@ namespace MassResizer
                     new List<string>(Directory.GetFiles(textBoxInput.Text));
                 // remove non-picture files
                 files.RemoveAll(x => !pictureRegex.IsMatch(x));
+                Queue<string> queue = new Queue<string>(files);
                 progressBar1.Maximum = files.Count;
                 string[] res = comboBoxResolution.Text.Split('x');
                 int width = int.Parse(res[0]);
@@ -83,33 +84,26 @@ namespace MassResizer
 
                 List<ResizerThread> resizers =
                     new List<ResizerThread>(ProcessorCount);
-                int startIndex = 0;
-                int endIndex = files.Count / ProcessorCount;
-                for (int i = 0; i < ProcessorCount - 1; i++)
+                for (int i = 0; i < ProcessorCount; i++)
                 {
-                    resizers.Add(new ResizerThread(files, textBoxOutput.Text,
-                        startIndex, endIndex, size, type));
-                    startIndex += files.Count / ProcessorCount;
-                    endIndex += files.Count / ProcessorCount;
+                    resizers.Add(new ResizerThread(queue, textBoxOutput.Text,
+                        size, type));
                 }
-                resizers.Add(new ResizerThread(files, textBoxOutput.Text,
-                        startIndex, files.Count, size, type));
 
                 resizers.ForEach(r => r.Thread.Start());
 
                 while (!resizers.TrueForAll(r =>
                     r.Thread.ThreadState == ThreadState.Stopped))
                 {
-                    foreach (ResizerThread resizer in resizers)
-                        if (resizer.Completed != 0)
-                            lock (resizer.CompletedLock)
-                            {
-                                progressBar1.Value += resizer.Completed;
-                                resizer.Completed = 0;
-                            }
+                    lock (queue)
+                    {
+                        progressBar1.Value = files.Count - queue.Count;
+                    }
                     Application.DoEvents();
+                    Thread.Sleep(50);
                 }
                 progressBar1.Value = 0;
+                MessageBox.Show("Done !");
             }
             catch (Exception x)
             {

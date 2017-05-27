@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using static System.Drawing.RotateFlipType;
 
 namespace MassResizer
@@ -18,23 +15,16 @@ namespace MassResizer
             Fill = 1,
             FitNoBorders = 2
         }
-
-        public int Completed = 0;
-        public object CompletedLock = new object();
         public Thread Thread;
 
-        private int startIndex;
-        private int endIndex;
-        private List<string> toConvert;
+        private Queue<string> toConvert;
         private string outputPath;
         private Size surface;
         private ResizeType type;
 
-        public ResizerThread(List<string> files, string outputPath, int start,
-            int end, Size surfaceSize, ResizeType resizeType)
+        public ResizerThread(Queue<string> files, string outputPath,
+            Size surfaceSize, ResizeType resizeType)
         {
-            startIndex = start;
-            endIndex = end;
             toConvert = files;
             this.outputPath = outputPath;
             surface = surfaceSize;
@@ -45,9 +35,15 @@ namespace MassResizer
 
         public void Convert()
         {
-            for (int i = startIndex; i < endIndex; i++)
+            while (true)
             {
-                string file = toConvert[i];
+                string file;
+                lock (toConvert)
+                {
+                    if (toConvert.Count == 0)
+                        break;
+                    file = toConvert.Dequeue();
+                }
                 Bitmap input = new Bitmap(file);
                 if (Array.IndexOf(input.PropertyIdList,274) > -1)
                 {
@@ -96,7 +92,6 @@ namespace MassResizer
                     Path.DirectorySeparatorChar + Path.GetFileName(file);
                 output.Save(outputFile);
                 output.Dispose();
-                Completed++;
             }
         }
     }

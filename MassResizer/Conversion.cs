@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MassResizer
 {
-    class Conversion
+    static class Conversion
     {
         public static Bitmap ScaleToFill(Bitmap image, Size surface)
         {
