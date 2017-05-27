@@ -42,6 +42,7 @@
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxResolution = new System.Windows.Forms.ComboBox();
+            this.buttonAbout = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -169,11 +170,22 @@
             this.comboBoxResolution.TabIndex = 11;
             this.comboBoxResolution.Text = "1920x1080";
             // 
+            // buttonAbout
+            // 
+            this.buttonAbout.Location = new System.Drawing.Point(12, 241);
+            this.buttonAbout.Name = "buttonAbout";
+            this.buttonAbout.Size = new System.Drawing.Size(202, 23);
+            this.buttonAbout.TabIndex = 13;
+            this.buttonAbout.Text = "Help / About";
+            this.buttonAbout.UseVisualStyleBackColor = true;
+            this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(226, 248);
+            this.ClientSize = new System.Drawing.Size(226, 276);
+            this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxResolution);
             this.Controls.Add(this.progressBar1);
@@ -188,6 +200,7 @@
             this.Controls.Add(this.textBoxInput);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.HelpButton = true;
             this.Name = "FormMain";
             this.ShowIcon = false;
             this.Text = "MassResizer";
@@ -212,6 +225,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxResolution;
+        private System.Windows.Forms.Button buttonAbout;
     }
 }
 

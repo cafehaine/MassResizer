@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Management;
-using static System.Environment;
 using System.Threading;
+using static System.Environment;
+using static System.Text.RegularExpressions.RegexOptions;
 
 namespace MassResizer
 {
     public partial class FormMain : Form
     {
-        private static Regex resolutionRegex = new Regex("[0-9]+x[0-9]+");
-        private static Regex pictureRegex = new Regex(@".*\.(jpe?g|bmp|png|gif)", RegexOptions.IgnoreCase);
+        private static Regex resolutionRegex = new Regex("[0-9]+x[0-9]+",
+            Compiled);
+        private static Regex pictureRegex = new Regex(
+            @".*\.(jpe?g|bmp|png|gif)", IgnoreCase | Compiled);
+
         public FormMain()
         {
             InitializeComponent();
@@ -85,10 +83,8 @@ namespace MassResizer
                 List<ResizerThread> resizers =
                     new List<ResizerThread>(ProcessorCount);
                 for (int i = 0; i < ProcessorCount; i++)
-                {
                     resizers.Add(new ResizerThread(queue, textBoxOutput.Text,
                         size, type));
-                }
 
                 resizers.ForEach(r => r.Thread.Start());
 
@@ -109,6 +105,12 @@ namespace MassResizer
             {
                 MessageBox.Show("A problem occured:\n" + x.Message);
             }
+        }
+
+        private void buttonAbout_Click(object sender, EventArgs e)
+        {
+            AboutBox dialog = new AboutBox();
+            dialog.ShowDialog(this);
         }
     }
 }
