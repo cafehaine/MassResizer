@@ -112,5 +112,21 @@ namespace MassResizer
             AboutBox dialog = new AboutBox();
             dialog.ShowDialog(this);
         }
+
+        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch ((string)comboBoxType.SelectedItem)
+            {
+                case "Fit":
+                    pictureBoxPreview.Image = Properties.Resources.fit;
+                    break;
+                case "FitNoBorders":
+                    pictureBoxPreview.Image = Properties.Resources.fitnoborders;
+                    break;
+                case "Fill":
+                    pictureBoxPreview.Image = Properties.Resources.fill;
+                    break;
+            }
+        }
     }
 }

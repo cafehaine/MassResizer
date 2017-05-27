@@ -43,6 +43,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxResolution = new System.Windows.Forms.ComboBox();
             this.buttonAbout = new System.Windows.Forms.Button();
+            this.pictureBoxPreview = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -111,6 +113,7 @@
             this.comboBoxType.Size = new System.Drawing.Size(202, 21);
             this.comboBoxType.TabIndex = 6;
             this.comboBoxType.Text = "Fit";
+            this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.comboBoxType_SelectedIndexChanged);
             // 
             // labelScaling
             // 
@@ -180,11 +183,21 @@
             this.buttonAbout.UseVisualStyleBackColor = true;
             this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
+            // pictureBoxPreview
+            // 
+            this.pictureBoxPreview.Image = global::MassResizer.Properties.Resources.fit;
+            this.pictureBoxPreview.Location = new System.Drawing.Point(221, 12);
+            this.pictureBoxPreview.Name = "pictureBoxPreview";
+            this.pictureBoxPreview.Size = new System.Drawing.Size(252, 252);
+            this.pictureBoxPreview.TabIndex = 14;
+            this.pictureBoxPreview.TabStop = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(226, 276);
+            this.ClientSize = new System.Drawing.Size(486, 276);
+            this.Controls.Add(this.pictureBoxPreview);
             this.Controls.Add(this.buttonAbout);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxResolution);
@@ -201,9 +214,11 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.HelpButton = true;
+            this.MaximizeBox = false;
             this.Name = "FormMain";
             this.ShowIcon = false;
             this.Text = "MassResizer";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,6 +241,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxResolution;
         private System.Windows.Forms.Button buttonAbout;
+        private System.Windows.Forms.PictureBox pictureBoxPreview;
     }
 }
 
